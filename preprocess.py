@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 #-------------------------------------------------------------------------
 # preprocess.py
-# A wrapper that #hihihihihasdfasdf
+# A wrapper that#hihihihihgfgfgf
 # 1- scans the tumor and normal alignments to extract features and raw candidates (call to 'scan_alignments.py')
 # 2- filters candidates to met cut-offs (call to 'filter_candidates.py')
 # 3- generate datasets for candidates to be used by network (call to 'generate_dataset.py')
