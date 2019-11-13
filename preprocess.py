@@ -24,7 +24,7 @@ from utils import concatenate_vcfs
 
 def split_dbsnp(record):
     restart, dbsnp, region_bed, dbsnp_region_vcf = record
-    thread_logger = logging.getLogger(
+    thread_logger = logging.getLogger( #이렇게 logging.getLogger로, logging을 호출하면 "{} ({})" 라는 특정 로거를 생성함
         "{} ({})".format(split_dbsnp.__name__, multiprocessing.current_process().name))
     try:
         if restart or not os.path.exists(dbsnp_region_vcf):
@@ -47,7 +47,10 @@ def process_split_region(tn, work, region, reference, mode, alignment_bam, dbsnp
                          scan_alignments_binary, restart, num_threads, calc_qual, regions=[], dbsnp_regions=[]):
 
     logger = logging.getLogger(process_split_region.__name__)
-    logger.info("Scan bam.")
+    #logging을 호출하면 "process_split_region." 라는 특정 로거를 생성함
+    #모듈로 import되어 동작하는지를 알려주는 __name__ 전역 변수(global variable)을 제공
+    logger.info("Scan bam.") 
+    #log 레벨값 info를 주어서, 너무 많은 정보를 출력하지 않도록 한다 " " 가 출력됨.
     scan_outputs = scan_alignments(work, scan_alignments_binary, alignment_bam,
                                    region, reference, num_threads, scan_window_size, scan_maf,
                                    min_mapq, max_dp, filter_duplicate, restart=restart, split_region_files=regions,
@@ -123,7 +126,9 @@ def process_split_region(tn, work, region, reference, mode, alignment_bam, dbsnp
 
 def generate_dataset_region(work, truth_vcf, mode, filtered_candidates_vcf, region, tumor_count_bed, normal_count_bed, reference,
                             matrix_width, matrix_base_pad, min_ev_frac_per_col, min_cov, num_threads, ensemble_bed, tsv_batch_size):
-    logger = logging.getLogger(generate_dataset_region.__name__)
+    logger = logging.getLogger(generate_dataset_region.__name__) 
+    #logging을 호출하면 "generate_dataset_region." 라는 특정 로거를 생성함
+    #모듈로 import되어 동작하는지를 알려주는 __name__ 전역 변수(global variable)을 제공
     generate_dataset(work, truth_vcf, mode, filtered_candidates_vcf, region, tumor_count_bed, normal_count_bed, reference,
                      matrix_width, matrix_base_pad, min_ev_frac_per_col, min_cov, num_threads, None, ensemble_bed,
                      tsv_batch_size)
@@ -131,7 +136,7 @@ def generate_dataset_region(work, truth_vcf, mode, filtered_candidates_vcf, regi
 
 def get_ensemble_region(record):
     reference, ensemble_bed, region, ensemble_bed_region_file, matrix_base_pad = record
-    thread_logger = logging.getLogger(
+    thread_logger = logging.getLogger( #이렇게 logging.getLogger로, logging을 호출하면 "{} ({})" 라는 특정 로거를 생성함
         "{} ({})".format(get_ensemble_region.__name__, multiprocessing.current_process().name))
     try:
         pybedtools.BedTool(ensemble_bed).intersect(
@@ -147,6 +152,8 @@ def get_ensemble_region(record):
 
 def get_ensemble_beds(work, reference, ensemble_bed, split_regions, matrix_base_pad, num_threads):
     logger = logging.getLogger(get_ensemble_beds.__name__)
+    #logging을 호출하면 "get_ensemble_beds." 라는 특정 로거를 생성함
+    #모듈로 import되어 동작하는지를 알려주는 __name__ 전역 변수(global variable)을 제공
 
     work_ensemble = os.path.join(work, "ensemble_anns")
     if not os.path.exists(work_ensemble):
@@ -178,6 +185,8 @@ def extract_candidate_split_regions(
         work, filtered_candidates_vcfs, split_regions, ensemble_beds,
         reference, matrix_base_pad, merge_d_for_short_read):
     logger = logging.getLogger(extract_candidate_split_regions.__name__)
+    #logging을 호출하면 "extract_candidate_split_regions." 라는 특정 로거를 생성함
+    #모듈로 import되어 동작하는지를 알려주는 __name__ 전역 변수(global variable)을 제공
 
     candidates_split_regions = []
     for i, (filtered_vcf, split_region_) in enumerate(zip(filtered_candidates_vcfs,
@@ -207,8 +216,10 @@ def preprocess(work, mode, reference, region_bed, tumor_bam, normal_bam, dbsnp,
                num_threads,
                scan_alignments_binary,):
     logger = logging.getLogger(preprocess.__name__)
-
+    #logging을 호출하면 "preprocess." 라는 특정 로거를 생성함
+    #모듈로 import되어 동작하는지를 알려주는 __name__ 전역 변수(global variable)을 제공
     logger.info("----------------------Preprocessing------------------------")
+    #log 레벨값 info를 주어서, 너무 많은 정보를 출력하지 않도록 한다 " " 가 출력됨.
     if restart or not os.path.exists(work):
         os.mkdir(work)
 
@@ -344,7 +355,8 @@ if __name__ == '__main__':
     FORMAT = '%(levelname)s %(asctime)-15s %(name)-20s %(message)s'
     logging.basicConfig(level=logging.INFO, format=FORMAT)
     logger = logging.getLogger(__name__)
-
+    #logging을 호출함
+    #모듈로 import되어 동작하는지를 알려주는 __name__ 전역 변수(global variable)을 제공
     parser = argparse.ArgumentParser(
         description='Preprocess input alignments for train/call')
     parser.add_argument('--mode', type=str, help='train/call mode',
