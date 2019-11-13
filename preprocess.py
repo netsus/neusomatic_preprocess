@@ -12,7 +12,7 @@ import argparse
 import os
 import shutil
 import traceback
-import logging #현재 우리의 프로그램이 어떤 상태를 가지고 있는지, 외부출력을 하게 만들어서 눈으로 직접 확인할 수 있게하는 
+import logging #현재 우리의 프로그램이 어떤 상태를 가지고 있는지, 외부출력을 하게 만들어서 눈으로 직접 확인할 수 있게하는 라이브러리
 
 import pybedtools
 
